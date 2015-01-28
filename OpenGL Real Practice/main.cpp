@@ -1,32 +1,41 @@
-#include "FrameWork.cpp"
-#include "Sprite.cpp"
+#include "FrameWork.h"
+#include "Sprite.h"
+#include "SpriteAnimated.h"
 
 int main() {
 	
-	FrameWork root;
+	FrameWork* root = new FrameWork();
 
-	Sprite testSprite;
-	testSprite.initializeSprite(root.shaderProgram, 0, 0, 100, 200);
+	Sprite testSprite = Sprite();
+	testSprite.initializeSprite("kirby2.png", root->shaderProgramTextured, 0, 250, 420, 38);
 
-	//Sprite testSprite2;
-	//testSprite2.initializeSprite(root.shaderProgram, 0, 0, 1, 1);
+	SpriteAnimated testAnim = SpriteAnimated();
+	testAnim.initializeAnimation(21, 19, 10);
+	testAnim.initializeSprite("kirby2.png", root->shaderProgramTextured, 0, 0, 21, 19);
 
+	int testanimvar = 0;
 	//Game Loop #########
-	while (!glfwWindowShouldClose(root.window)) {
+	while (!glfwWindowShouldClose(root->window)) {
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		testSprite.Draw();
-		
-		//testSprite2.Draw();
 
-		if (glfwGetKey(root.window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-			glfwSetWindowShouldClose(root.window, GL_TRUE);
+		testanimvar++;
+		if (testanimvar >= 100) {
+			testAnim.currentFrame++;
+			testanimvar -= 100;
 		}
-		glfwSwapBuffers(root.window);
+		testAnim.Draw();
+
+		if (glfwGetKey(root->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+			glfwSetWindowShouldClose(root->window, GL_TRUE);
+		}
+		glfwSwapBuffers(root->window);
 		glfwPollEvents();
 	}
-	glfwTerminate();
+	delete root;
+	//glfwTerminate();
 	return 0;
 }

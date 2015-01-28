@@ -69,9 +69,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BADSprite.cpp" />
     <ClCompile Include="FrameWork.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteAnimated.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FrameWork.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteAnimated.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
