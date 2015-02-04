@@ -13,11 +13,11 @@ int main() {
 	Quad testQuad;
 
 	Sprite testSprite = Sprite();
-	testSprite.initializeSprite("plane1.png", 400, 400, 40, 40);
+	testSprite.initializeSprite("plane1.png", 600, 400, 40, 40);
 
 	while (!glfwWindowShouldClose(root->window)) {
 
-		glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		testQuad.Draw();
