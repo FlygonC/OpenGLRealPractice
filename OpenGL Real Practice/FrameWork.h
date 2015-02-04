@@ -4,6 +4,7 @@
 #include <GL/wglew.h>
 //GLEW includes must precede anything else
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <SOIL.h>
 #include <iostream>
@@ -13,9 +14,13 @@ public:
 	FrameWork();
 	~FrameWork();
 
+	void Orthograghic(float a_fLeft, float a_fRight, float a_fTop, float a_fBottom, float a_fNear, float a_fFar, glm::mat4 & mat);
+
 	GLFWwindow* window;
 	GLuint vertexShader;
 	GLuint fragmentShader;
 	GLuint fragmentShaderTextured;
-	GLuint shaderProgram, shaderProgramTextured;
+	static GLuint shaderProgram, shaderProgramTextured;
+	static int screenWidth, screenHeight;
+	static glm::mat4 Ortho;
 };

@@ -2,6 +2,12 @@
 
 #include "FrameWork.h"
 
+GLuint FrameWork::shaderProgram;
+GLuint FrameWork::shaderProgramTextured;
+int FrameWork::screenHeight = 800;
+int FrameWork::screenWidth = 1000;
+glm::mat4 FrameWork::Ortho;
+
 FrameWork::FrameWork() {
 	//Start GLFW #########
 	glfwInit();
@@ -13,7 +19,7 @@ FrameWork::FrameWork() {
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 	//Create Window
-	window = glfwCreateWindow(800, 800, "OpenGL", nullptr, nullptr); // Windowed
+	window = glfwCreateWindow(screenWidth, screenHeight, "OpenGL", nullptr, nullptr); // Windowed
 	//GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL", glfwGetPrimaryMonitor(), nullptr); // Fullscreen
 	glfwMakeContextCurrent(window);
 	//Start GLEW ##########
@@ -99,16 +105,40 @@ FrameWork::FrameWork() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	Orthograghic(0, screenWidth, screenHeight, 0, -1, 1, Ortho);
 }
 FrameWork::~FrameWork() {
 	glDeleteProgram(shaderProgram);
 	glDeleteShader(fragmentShader);
 	glDeleteShader(vertexShader);
 	glfwTerminate();
+}
+
+
+void FrameWork::Orthograghic(float a_fLeft, float a_fRight, float a_fTop, float a_fBottom, float a_fNear, float a_fFar, glm::mat4 & mat) {
+	float deltaX = a_fRight - a_fLeft;
+	float deltaY = a_fTop - a_fBottom;
+	float deltaZ = a_fNear - a_fFar;
+
+	mat[0].x = 2.f / deltaX;
+	mat[0].y = 0.f;
+	mat[0].z = 0.f;
+	mat[0].w = 0.f;
+
+	mat[1].x = 0.f;
+	mat[1].y = 2.f / deltaY;
+	mat[1].z = 0.f;
+	mat[1].w = 0.f;
+
+	mat[2].x = 0.f;
+	mat[2].y = 0.f;
+	mat[2].z = 2.f / deltaZ;
+	mat[2].w = 0.f;
+
+	mat[3].x = ((a_fLeft + a_fRight) / (a_fLeft - a_fRight));
+	mat[3].y = ((a_fBottom + a_fTop) / (a_fBottom - a_fTop));
+	mat[3].z = (-(a_fNear + a_fFar) / (a_fFar - a_fNear));
+	mat[3].w = 1.f;
 }
 
 /*

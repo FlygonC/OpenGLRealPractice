@@ -7,10 +7,12 @@
 
 #include <SOIL.h>
 
+#include "FrameWork.h"
+
 class SpriteAnimated {
 public:
 	SpriteAnimated();
-	void initializeSprite(char* texturePath, GLuint a_Shader, float a_x, float a_y, float a_width, float a_height);
+	void initializeSprite(char* texturePath, float a_x, float a_y, float a_width, float a_height);
 	void updateGLData();
 	void updateData();
 	void Draw();
@@ -20,6 +22,6 @@ public:
 	int numFrames, currentFrame;
 	//Matrix4 Vertecies, Colors, UVs;
 	float vertexData[16];
-	float UVData[8];
-	GLuint VBO, Texture, Shader;
+	//float UVData[8];
+	GLuint VBO, Texture;
 };

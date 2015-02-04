@@ -4,8 +4,7 @@
 
 SpriteAnimated::SpriteAnimated() {}
 
-void SpriteAnimated::initializeSprite(char* texturePath, GLuint a_Shader, float a_x, float a_y, float a_width, float a_height) {
-	Shader = a_Shader;
+void SpriteAnimated::initializeSprite(char* texturePath, float a_x, float a_y, float a_width, float a_height) {
 	x = a_x;
 	y = a_y;
 	width = a_width;
@@ -53,13 +52,12 @@ void SpriteAnimated::updateData() {
 	x + (width / 2), y + (height / 2), 1, 0,//top right
 	};*/
 
-	frameNormWidth = frameWidth / sheetWidth;
-	frameNormHeight = frameHeight / sheetHeight;
+	
 
 	//bottom left
 	vertexData[0] = (x - (width / 2)) / 400;
 	vertexData[1] = (y - (height / 2)) / 400;
-	vertexData[2] = frameNormWidth*(currentFrame-1);//uvs
+	vertexData[2] = frameNormWidth*(currentFrame - 1);//uvs
 	vertexData[3] = 1;
 	//bottom right
 	vertexData[4] = (x + (width / 2)) / 400;
@@ -82,9 +80,8 @@ void SpriteAnimated::Draw() {
 	updateData();
 	updateGLData();
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 	glBindTexture(GL_TEXTURE_2D, Texture);
-	glUseProgram(Shader);
+	glUseProgram(FrameWork::shaderProgramTextured);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
@@ -98,4 +95,6 @@ void SpriteAnimated::initializeAnimation(float a_frameWidth, float a_frameHeight
 	frameHeight = a_frameHeight;
 	numFrames = a_numOfFrames;
 	currentFrame = 1;
+	frameNormWidth = frameWidth / sheetWidth;
+	frameNormHeight = frameHeight / sheetHeight;
 }
