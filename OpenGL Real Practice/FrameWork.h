@@ -24,3 +24,8 @@ public:
 	static int screenWidth, screenHeight;
 	static glm::mat4 Ortho;
 };
+
+//float deltaTime;
+
+float getDeltaTime();
+void resetTime();

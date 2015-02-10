@@ -130,7 +130,7 @@ void Sprite::initializeSprite(const char* texturePath, float a_x, float a_y, flo
 	int texWidth, texHeight;
 	unsigned char* image = SOIL_load_image(texturePath, &texWidth, &texHeight, 0, SOIL_LOAD_AUTO);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-	//sheetWidth = texWidth; sheetHeight = texHeight;
+	sheetWidth = texWidth; sheetHeight = texHeight;
 	SOIL_free_image_data(image);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
@@ -145,20 +145,31 @@ void Sprite::Draw() {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, Texture);
 
-	GLint uniTexture = glGetUniformLocation(ShaderProgram, "tex");
-	glUniform1f(uniTexture, 0);
+	//GLint uniTexture = glGetUniformLocation(ShaderProgram, "tex");
+	//glUniform1f(uniTexture, 0);
 
 	glm::mat4 viewTranslate = glm::translate(glm::mat4(), glm::vec3(x, y, 0));
 	glm::mat4 Model = glm::scale(glm::mat4(), glm::vec3(width, height, 1));
-
+	//    ________________
 	MVP = FrameWork::Ortho * viewTranslate * Model;
 
 	GLuint mv_location = glGetUniformLocation(ShaderProgram, "MVPmatrix");
 	glUniformMatrix4fv(mv_location, 1, GL_FALSE, glm::value_ptr(MVP));
+
 	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, 0);
 
 	glUseProgram(0);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Sprite::updateUVs() {
+	glBindVertexArray(VAO);//Open Vertex Array
+
+	glBindBuffer(GL_ARRAY_BUFFER, UVBO);//Bind UVBO, VBO unbound
+	glBufferData(GL_ARRAY_BUFFER, sizeof(UVs), UVs, GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

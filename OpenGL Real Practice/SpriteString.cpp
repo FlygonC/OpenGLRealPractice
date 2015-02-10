@@ -6,30 +6,39 @@ SpriteString::SpriteString() {}
 
 SpriteString::~SpriteString() {}
 
-void SpriteString::InitializeString(char a_input[], char* a_FontPath, float a_x, float a_y, float a_scale) {
-	for (int i = 0; i < strlen(a_input); i++) {
+void SpriteString::InitializeString(const char* a_input, const char* a_FontPath, float a_x, float a_y, float a_scale) {
+	for (int i = 0; i < strlen(a_input)+1; i++) {
 		input[i] = a_input[i];
 	}
-	FontPath = a_FontPath;
+	//FontPath = a_FontPath;
 	x = a_x;
 	y = a_y;
 	scale = a_scale;
 
-	output.initializeSprite("TestFont.png", x, y, scale, scale);
-}
-
-void SpriteString::ProcessString() {
-	
+	output.initializeSprite(a_FontPath, x, y, scale, scale);
+	output.makeBasicStructure(16, 16);
 }
 
 void SpriteString::Draw() {
-	for (int i = 0; i < strlen(input); i++) {
+	//int testLength = strlen(input);
+	int i = 0;
+	while (input[i] != '\0') {
 		output.x = x+i*(scale);
-		output.code = (int)input[i];
-		//output[i].y = y;
-		//output[i].width = scale;
-		//output[i].height = scale;
-		output.updateData();
+
+		output.playFrame(input[i]);
 		output.Draw();
+		i++;
 	}
+}
+
+void SpriteString::makeBasicStructure(int a_width, int a_height) {
+	/*for (int i = 0; i < 16; i++) {
+		for (int j = 0; j < 16; j++) {
+			frames[(i*16) + j].x0 = (a_width / 16)*j;
+			frames[(i*16) + j].x1 = (a_width / 16)*j + (a_width / 16);
+
+			frames[(i*16) + j].y0 = (a_height / 16)*i;
+			frames[(i*16) + j].y1 = (a_height / 16)*i + (a_height / 16);
+		}
+	}*/
 }

@@ -22,12 +22,11 @@ public:
 	~Sprite();
 	void initializeSprite(const char* texturePath, float a_x, float a_y, float a_width, float a_height);
 	void Draw();
+	void updateUVs();
 
 	bool initialized = false;
 	float width, height, x, y, sheetWidth, sheetHeight;
 	UVpoint UVs[4];
-	//Matrix4 Vertecies, Colors, UVs;
-	//float vertexData[16];
 	GLuint VBO, UVBO, EBO, VAO, VertexShader, FragmentShader, ShaderProgram, Texture;
 	glm::mat4 MVP;
 };
