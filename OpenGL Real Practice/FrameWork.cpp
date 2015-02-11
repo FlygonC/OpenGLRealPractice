@@ -2,10 +2,11 @@
 
 #include "FrameWork.h"
 
+GLFWwindow* FrameWork::window;
 GLuint FrameWork::shaderProgram;
 GLuint FrameWork::shaderProgramTextured;
-int FrameWork::screenHeight = 800;
-int FrameWork::screenWidth = 1000;
+int FrameWork::screenHeight = 400;
+int FrameWork::screenWidth = 800;
 glm::mat4 FrameWork::Ortho;
 
 FrameWork::FrameWork() {
@@ -139,6 +140,10 @@ void FrameWork::Orthograghic(float a_fLeft, float a_fRight, float a_fTop, float 
 	mat[3].y = ((a_fBottom + a_fTop) / (a_fBottom - a_fTop));
 	mat[3].z = (-(a_fNear + a_fFar) / (a_fFar - a_fNear));
 	mat[3].w = 1.f;
+}
+
+bool FrameWork::getKeyPressed(GLuint a_key) {
+	return glfwGetKey(window, a_key) == GLFW_PRESS;
 }
 
 float deltaTime = 0;

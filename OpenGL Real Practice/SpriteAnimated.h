@@ -48,7 +48,8 @@ public:
 	void playAnimation(int a_anim);
 	void Update();
 
-	float width, height, x, y, sheetWidth, sheetHeight, fps, elapsedTime = 0;
+	float width, height, /*x, y,*/ sheetWidth, sheetHeight, fps, elapsedTime = 0;
+	glm::vec2 position;
 	int currentFrame = 0;
 	PlayState playState = PLAY;
 	UVpoint2 UVs[4];

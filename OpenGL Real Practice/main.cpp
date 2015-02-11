@@ -4,43 +4,65 @@
 #include "SpriteString.h"
 #include "Quad.h"
 
+#include "Player.h"
+#include "Bomb.h"
+#include "Heart.h"
+
 #include <iostream>
+#include <time.h>
+#include <cstring>
+#include <sstream>
 
 int main() {
 	
 	FrameWork* root = new FrameWork();
+	float FDeltaTime = getDeltaTime();
+	srand(time(NULL));
+	
+	Player* player = new Player();
+	player->lives = 10;
 
-	Quad testQuad;
+	SpriteString livesString;
+	livesString.InitializeString("Lives: --", "TestFont2.png", 10, 390, 14);
 
-	Sprite testSprite = Sprite();
-	testSprite.initializeSprite("plane1.png", 600, 400, 40, 40);
+	float timeCounter = 0;
+	int timeTotal = 0;
+	SpriteString timeTotalString;
+	timeTotalString.InitializeString("Time: 0", "TestFont2.png", 10, 10, 14);
 
-	SpriteString testString = SpriteString();
-	testString.InitializeString("String", "TestFont2.png", 100, 100, 224/16);
-
-	SpriteAnimated testAnim = SpriteAnimated();
-	testAnim.initializeSprite("kirby2.png", 600, 500, 21*1, 19*1);
-	testAnim.makeBasicStructure(10, 1);
-	testAnim.setAnimation(0, 0, 9, LOOP);
-	testAnim.playAnimation(0);
-	testAnim.fps = 10;
-	//testAnim.setFrame(2);
+	Bomb testBomb[50];
+	Heart heart;
 
 	while (!glfwWindowShouldClose(root->window)) {
-
-		glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		testQuad.Draw();
+		FDeltaTime = getDeltaTime();
+		if (FDeltaTime >= 0.1) {
+			FDeltaTime = 0.1;
+		}
 
-		testSprite.Draw();
+		player->Update(FDeltaTime);
+		for (int i = 0; i < 50; i++) {
+			testBomb[i].Update(player, FDeltaTime);
+		}
 
-		testAnim.Update();
-		testAnim.Draw();
+		heart.Update(player, FDeltaTime);
 
-		testString.Draw();
+		std::stringstream livesStringBuffer;
+		livesStringBuffer << "Health: " << player->lives;
+		livesString.changeInput(livesStringBuffer.str().c_str());
+		livesString.Draw();
 
-		//std::cout << getDeltaTime() << "\n";
+		timeCounter += FDeltaTime;
+		if (timeCounter >= 1) {
+			timeTotal++;
+			timeCounter -= 1;
+			std::stringstream timeStringBuffer;
+			timeStringBuffer << "Time: " << timeTotal;
+			timeTotalString.changeInput(timeStringBuffer.str().c_str());
+		}
+		timeTotalString.Draw();
 
 		resetTime();
 
@@ -50,6 +72,7 @@ int main() {
 		glfwSwapBuffers(root->window);
 		glfwPollEvents();
 	}
+	delete player;
 	delete root;
 	//glfwTerminate();
 	return 0;

@@ -114,8 +114,9 @@ SpriteAnimated::~SpriteAnimated() {
 }
 
 void SpriteAnimated::initializeSprite(const char* texturePath, float a_x, float a_y, float a_width, float a_height) {
-	x = a_x;
-	y = a_y;
+	position = glm::vec2(a_x, a_y);
+	//x = a_x;
+	//y = a_y;
 	width = a_width;
 	height = a_height;
 
@@ -127,6 +128,7 @@ void SpriteAnimated::initializeSprite(const char* texturePath, float a_x, float 
 	}*/
 	currentFrame = 0;
 	currentAnimation = animations[0];
+	fps = 10;
 
 	//glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);
@@ -153,10 +155,10 @@ void SpriteAnimated::Draw() {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, Texture);
 
-	//GLint uniTexture = glGetUniformLocation(ShaderProgram, "tex");
-	//glUniform1f(uniTexture, 0);
+	GLint uniTexture = glGetUniformLocation(ShaderProgram, "tex");
+	glUniform1f(uniTexture, 0);
 
-	glm::mat4 viewTranslate = glm::translate(glm::mat4(), glm::vec3(x, y, 0));
+	glm::mat4 viewTranslate = glm::translate(glm::mat4(), glm::vec3(position.x, position.y, 0));
 	glm::mat4 Model = glm::scale(glm::mat4(), glm::vec3(width, height, 1));
 	//    ________________
 	MVP = FrameWork::Ortho * viewTranslate * Model;
@@ -247,7 +249,7 @@ void SpriteAnimated::Update() {
 				break;
 			case LOOP:
 			//default:
-				currentFrame -= currentAnimation.endFrame - currentAnimation.startFrame;
+				currentFrame -= (currentAnimation.endFrame + 1) - currentAnimation.startFrame;
 				break;
 			}
 		}
