@@ -30,9 +30,6 @@
     <ClCompile Include="SpriteAnimated.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteChar.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteString.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
@@ -60,9 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SpriteAnimated.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteChar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SpriteString.h">

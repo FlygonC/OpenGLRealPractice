@@ -30,7 +30,7 @@ int main() {
 	SpriteString timeTotalString;
 	timeTotalString.InitializeString("Time: 0", "TestFont2.png", 10, 10, 14);
 
-	Bomb testBomb[50];
+	Bomb testBomb[10];
 	Heart heart;
 
 	while (!glfwWindowShouldClose(root->window)) {
@@ -43,7 +43,7 @@ int main() {
 		}
 
 		player->Update(FDeltaTime);
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 10; i++) {
 			testBomb[i].Update(player, FDeltaTime);
 		}
 

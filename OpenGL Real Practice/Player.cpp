@@ -4,7 +4,7 @@
 
 Player::Player() {
 	position = glm::vec2(200,200);
-	velocity = glm::vec2(0, 0);
+	velocity = glm::vec2(0.001, 0.00001);
 	hitCircle = 10;
 
 	sprite.initializeSprite("PlayerSprite.png", position.x, position.y, 40, 40);
@@ -76,12 +76,10 @@ void Player::Update(float a_deltaTime) {
 		velocity.x *= -1;
 	}
 	//apply movment
-	if (velocity.x != 0) {
-		position.x += (velocity.x * abs(glm::normalize(velocity).x)) * a_deltaTime;
-	}
-	if (velocity.y != 0) {
+	position += (velocity * abs(glm::normalize(velocity))) * a_deltaTime;
+	/*if (velocity.y != 0) {
 		position.y += (velocity.y * abs(glm::normalize(velocity).y)) * a_deltaTime;
-	}
+	}*/
 	//Sprite update
 	sprite.position = position;
 	//sprite.x = position.x;

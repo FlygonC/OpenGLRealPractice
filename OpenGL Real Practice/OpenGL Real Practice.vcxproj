@@ -83,7 +83,6 @@
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteAnimated.cpp" />
-    <ClCompile Include="SpriteChar.cpp" />
     <ClCompile Include="SpriteString.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -95,7 +94,6 @@
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteAnimated.h" />
-    <ClInclude Include="SpriteChar.h" />
     <ClInclude Include="SpriteString.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

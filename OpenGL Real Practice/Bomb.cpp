@@ -28,8 +28,10 @@ void Bomb::Update(Player* a_player, float a_deltaTime) {
 
 	if (live) {
 		sprite.position = position;
-		sprite.Update();
-		sprite.Draw();
+		if (position.x <= 840) {
+			sprite.Update();
+			sprite.Draw();
+		}
 		if (playerCollision(a_player)) {
 			live = false;
 			a_player->lives -= 1;
